@@ -174,10 +174,16 @@ Now, let's setup BOTS admin user, you could use Administrator user by default, b
 - ctf_admin
 - can_detele 
 
-[gif video]
+I'll create 2 users: one for BOTSv1 Admin and another is for us - competitors 
 
-Load sample data into Capture the Flag admin
+[BOTSv1 Admin gif video]
+[BOTSv1 Competitor gif video]
+
+Load sample data into Capture the Flag admin, notice that i clicked in tiny warning icon in the right side and choose `Run Query Anyway`
 
 [gif video]
 
 Load BOTS questions / answers / hints, you could send email to bots@splunk.com (BOTS Team) to get those contents or contact [me](https://t.me/sangpham0311) for it. 
+ - Move to Capture the Flag Admin app --> Edit Questions / Answers / Hints --> Import --> Select `.csv` file
+
+
