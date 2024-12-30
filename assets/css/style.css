@@ -1,0 +1,13 @@
+---
+---
+
+@import '{{ site.theme }}';
+
+.float-right {
+  float: right;
+  margin-left: 20px; /* Adjust the margin as needed */
+}
+
+.large-spacing {
+  margin-bottom: 200px; /* Adjust the value as needed */
+}

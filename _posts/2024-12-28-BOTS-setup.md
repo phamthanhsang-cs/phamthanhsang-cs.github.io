@@ -1,0 +1,183 @@
+---
+title: Setup your own Boss of the SOC 
+date: 2024-12-25 10:20:00 + 0700
+categories: [Homelab, SIEM]
+tags: [splunk, linux]    
+author: <author_id>   
+description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Splunk
+# toc: false - Table of Contents which is use for display content in right-panel 
+# comments: false 
+image: /assets/images/preview/botssetuppreview.png
+mermaid: true
+---
+![LinuxBox](/assets/images/bots-setup/neofetch-linuxboxinformation.png){: w="550" h="50" }{: .right }
+
+- Linux Distribution: Debian 12
+- vCPU: 8 cores
+- 16 GB of RAM
+- 50 GB of SSD Storage
+- `root` or `sudo` user
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Make sure your Linux box is fully upgraded.
+```bash
+apt update && apt upgrade -y
+```
+
+Create `botsv1`{: .filepath} directory, i like to put my `botsv1`{: .filepath} data into that directory for re-use purposes, and Splunk in `/otp/`{: .filepath} directory.
+```bash
+mkdir /opt/botsv1 && cd /opt/
+```
+
+Download Splunk Enterprise and unzip your download, i choose Splunk version 8.2.9 for my BOTSv1.
+```bash
+wget -O splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz "https://download.splunk.com/products/tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz -C /opt
+```
+
+Setup Splunk path for easy navigation.
+```bash
+export SPLUNK_HOME=/opt/splunk
+```
+
+Enable Splunk boot start which is help your Splunk always up even when you reboot your linux box.
+```bash
+$SPLUNK_HOME/bin/splunk enable boot-start
+     ...
+     Moving '/opt/splunk/share/splunk/search_mrsparkle/modules.new' to '/opt/splunk/share/splunk/search_mrsparkle/modules'.
+     Init script installed at /etc/init.d/splunk.
+     Init script is configured to run at boot.
+```
+Setup Splunk admin credential:
+- Please enter an administrator username: mine is `sys-admin`
+- Please enter a new password: (setup your own password)
+
+Start your Splunk Enterprise.
+```bash
+systemctl enable splunk
+systemctl restart splunk
+systemctl status splunk
+...
+botsv1 splunk[1216]:         All installed files intact.
+botsv1 splunk[1216]:         Done
+botsv1 splunk[1216]: All preliminary checks passed.
+botsv1 splunk[1216]: Starting splunk server daemon (splunkd)...
+botsv1 splunk[1216]: Done
+botsv1 splunk[1216]: Waiting for web server at http://127.0.0.1:8000 to be available....... Done
+botsv1 splunk[1216]: If you get stuck, we're here to help.
+botsv1 splunk[1216]: Look for answers here: http://docs.splunk.com
+botsv1 splunk[1216]: The Splunk web interface is at http://botsv1:8000
+botsv1 systemd[1]: Started splunk.service - LSB: Start splunk.
+```
+
+(Optional) You can confirm that your Splunk is up by using net-tools.
+```bash
+netstat -tlnpd
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      592/sshd: /usr/sbin 
+tcp        0      0 0.0.0.0:8089            0.0.0.0:*               LISTEN      1287/splunkd        
+tcp        0      0 0.0.0.0:8191            0.0.0.0:*               LISTEN      1375/mongod         
+tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      1287/splunkd  <--- this one       
+tcp        0      0 127.0.0.1:8065          0.0.0.0:*               LISTEN      1472/python3.7      
+tcp6       0      0 :::22                   :::*                    LISTEN      592/sshd: /usr/sbin 
+```
+Go to browser, enter your Splunk instance IP Address with port 8000 and sign-in with your previous Splunk admin credential.
+![firstimelogin](/assets/images/bots-setup/firstimelogin.png)
+_First login GUI of Splunk by default_
+
+Go back to your Linux box, download [`botsv1`](https://github.com/splunk/botsv1) dataset. The dataset that i downloaded is full data (around 33 milions events) which is contain both attack data and normal data (noisy) to help us enhanced Splunk search capabilities (Gossip: In my previous company when i was trying to sent the Fortigate Firewall's syslog into SC4S and then forward those logs to Splunk, around 20 days, it has like...50 milions events and cost like 50GB of Storage which is crazy !).
+```bash
+cd /opt/botsv1
+wget https://s3.amazonaws.com/botsdataset/botsv1/splunk-pre-indexed/botsv1_data_set.tgz
+```
+
+Extract your dataset and put in to Splunk apps directory.
+```bash
+tar xvzf botsv1_data_set.tgz -C $SPLUNK_HOME/etc/apps
+```
+
+Install these Apps / Add-on, follow [here](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) if you don't know how to install Splunk App and Add-on.
+
+*Note: some apps/add-on already archived or did not support anymore, but you still can download almost of those app without any issue.*
+
+| App / Add-on                         | Link                                    |
+| ------------------------------------ | --------------------------------------- |
+| Fortinet Fortigate Add-on for Splunk | https://splunkbase.splunk.com/app/2846/ |
+| Splunk App for Stream                | https://splunkbase.splunk.com/app/1809/ |
+| Splunk Add-on for Microsoft Windows  | https://splunkbase.splunk.com/app/742/  |
+| Splunk TA for Suricata               | https://splunkbase.splunk.com/app/2760/ |
+| Splunk Add-On for Microsoft Sysmon   | https://splunkbase.splunk.com/app/1914/ |
+| URL Toolbox                          | https://splunkbase.splunk.com/app/2734/ |
+
+You will not have Splunk Add-on for Tenable	here.
+
+Now you are able to searching the data of BOTSv1 with this SPL Command:
+```SQL
+index=botsv1 earliest=0
+```
+![firstimesearch](/assets/images/bots-setup/firstsplsearch.png)
+_We are now able to search BOTSv1 Data in Splunk_
+
+But we don't stop here, let's setup our own Boss of the SOC CTF Scoreboard ! 
+
+Firtly, install these Apps / Add-on. 
+
+| App / Add-on                                | Link                                                                         |
+| ------------------------------------------- | ---------------------------------------------------------------------------- |
+| Splunk App for Lookup File Editing          | https://splunkbase.splunk.com/app/1724/                                      |
+| Parallel Coordinates - Custom Visualization | Already archived, contact [me](https://t.me/sangpham0311) to get `.tgz` file |
+| Simple Timeseries Custom Visualization      | Already archived, contact [me](https://t.me/sangpham0311) to get `.tgz` file |
+| Timeline Custom Visualization               | Already archived, contact [me](https://t.me/sangpham0311) to get `.tgz` file |
+
+Move to Splunk `apps` directory and install CTF Scoreboard and CTF Scoreboard admin app.
+```bash
+cd $SPLUNK_HOME/etc/apps
+git clone https://github.com/splunk/SA-ctf_scoreboard
+git clone https://github.com/splunk/SA-ctf_scoreboard_admin
+```
+
+Restart Splunk for prerequisites and the scoring apps recognition
+```bash
+systemctl restart splunk
+```
+
+Create `scoreboard` log directory, you will need this.
+```bash
+mkdir $SPLUNK_HOME/var/log/scoreboard
+```
+
+Create `svcaccount` which is CTF Answers service account.
+```bash
+$SPLUNK_HOME/bin/splunk add user svcaccount -password <password> -role ctf_answers_service -auth admin:<admin_password>
+```
+
+Config the custom controller in `SA-ctf_scoreboard` app.
+```bash
+cd $SPLUNK_HOME/etc/apps/SA-ctf_scoreboard/appserver/controllers
+cp scoreboard_controller.config.example scoreboard_controller.config
+nano scoreboard_controller.config
+```
+```shell
+[ScoreboardController]
+USER = svcaccount
+PASS = <your svcaccount password>
+VKEY = random string (10-20 characters)
+```
+
+Restart your Splunk instance, we are done with terminal and stuffs like that, let's go back to your Splunk Web GUI.
+
+Now, let's setup BOTS admin user, you could use Administrator user by default, but it need the following roles:
+- admin
+- ctf_admin
+- can_detele 
+
+[gif video]
+
+Load sample data into Capture the Flag admin
+
+[gif video]
+
+Load BOTS questions / answers / hints, you could send email to bots@splunk.com (BOTS Team) to get those contents or contact [me](https://t.me/sangpham0311) for it. 
