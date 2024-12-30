@@ -112,7 +112,7 @@ Install these Apps / Add-on, follow [here](https://docs.splunk.com/Documentation
 | Splunk Add-On for Microsoft Sysmon   | https://splunkbase.splunk.com/app/1914/ |
 | URL Toolbox                          | https://splunkbase.splunk.com/app/2734/ |
 
-You will not have Splunk Add-on for Tenable	here.
+You will not have Splunk Add-on for Tenable	here since it archived already, but feel free to contact [me](https://t.me/sangpham0311) for it.
 
 Now you are able to searching the data of BOTSv1 with this SPL Command:
 ```SQL
@@ -174,16 +174,50 @@ Now, let's setup BOTS admin user, you could use Administrator user by default, b
 - ctf_admin
 - can_detele 
 
-I'll create 2 users: one for BOTSv1 Admin and another is for us - competitors 
+In my case, i'll create 2 users: one for BOTSv1 Admin and another is for us - competitors 
 
 [BOTSv1 Admin gif video]
-[BOTSv1 Competitor gif video]
+_BOTS Admin Setup_
 
-Load sample data into Capture the Flag admin, notice that i clicked in tiny warning icon in the right side and choose `Run Query Anyway`
+[BOTSv1 Competitor gif video]
+_BOTS Competitor Setup_
+
+Load sample data into Capture the Flag admin.
 
 [gif video]
 
 Load BOTS questions / answers / hints, you could send email to bots@splunk.com (BOTS Team) to get those contents or contact [me](https://t.me/sangpham0311) for it. 
  - Move to Capture the Flag Admin app --> Edit Questions / Answers / Hints --> Import --> Select `.csv` file
 
+[gif video]
+
+After your data import finish, you could attest by navigate to Capture the Flag Admin --> View --> Q&A
+
+Now set the start / end time of the questions by navigate to Capture the Flag Admin --> Edit --> Time Setup and then `Submit Changes` since we are not have any pressure about timely so we could left it whatever we want, i will set 1 year for my BOTSv1. 
+
+![timesetup](/assets/images/bots-setup/timesetup.png)
+
+Next, add your `competitor` user to Team / Users, navigate to Capture the Flag Admin --> Edit --> Edit Team/Users:
+ - Display Username: Whatever you want, mine is Pham Thanh Sang
+ - Team: SOC in my Pocket (Whatever you want too)
+ - Username(*): this one is the **most important** one, enter your previous `username` that you just created for BOTS Competitor, `phamthanhsang-cs` for me.
+
+Edit your user agreements accept, Admin --> Edit --> Edit Accepted User License Agreements:
+ - EulaDateAccepted
+ - EulaID
+ - EulaName
+ - EulaUsername(*): `username` that you just created for BOTS Competitor, mine is `phamthanhsang-cs`
+
+We are so done now, phew ! that was a long run, right ? Let's login Splunk with your `competitor` user, mine is `phamthanhsang-cs` and then go to Capture the Flag app => Questions.
+
+![BOTSV1Question](/assets/images/bots-setup/botsv1questions.png)
+_Boss of the SOC version 1 Questions, this is more or less you migh facing in your CTF Challenge_
+
+Let's answer a question to test if we setup our CTF game successfuly. 
+
+![AnswerTestQuestion](/assets/images/bots-setup/answertestquestion.png)
+_We are 'blue', right?_
+
+![TestCorrect](/assets/images/bots-setup/testcorrected.png)
+_Nice!_
 
