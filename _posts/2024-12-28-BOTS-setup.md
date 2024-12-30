@@ -10,9 +10,20 @@ description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Sp
 image: /assets/images/preview/botssetuppreview.png
 mermaid: true
 ---
+# Introduction
+I’ve always enjoyed learning about cybersecurity especially on blue side through hands-on challenges, and CTF - Boss of the SOC (BOTS) by Splunk are perfect for that. They give you the chance to experience real-world scenarios in a way that's engaging and practical.
+
+When I decided to set up BOTS and a CTF dashboard for myself, I was surprised at how little information was out there. Most of the guides I found were either focused on pre-hosted setups on online platforms, or only stop at install the Boss of the SOC data set. 
+
+That’s why I decided to write this blog. I wanted to share my experience, step by step, so anyone interested in doing the same thing can have a clear starting point. If you’ve been wanting to self-host BOTS or your own CTF dashboard but didn’t know where to begin, I hope this helps make the process easier and more approachable.
+<br>
+
+# Let's go
+You can run your Splunk on any OS: Windows / Linux / MacOS, i choose Linux for myself.
+
 ![LinuxBox](/assets/images/bots-setup/neofetch-linuxboxinformation.png){: w="550" h="50" }{: .right }
 
-- Linux Distribution: Debian 12
+- Linux Distro: Debian 12
 - vCPU: 8 cores
 - 16 GB of RAM
 - 50 GB of SSD Storage
@@ -28,7 +39,7 @@ Make sure your Linux box is fully upgraded.
 apt update && apt upgrade -y
 ```
 
-Create `botsv1`{: .filepath} directory, i like to put my `botsv1`{: .filepath} data into that directory for re-use purposes, and Splunk in `/otp/`{: .filepath} directory.
+Create `botsv1` directory, i like to put my `botsv1` data into that directory for re-use purposes, and Splunk in `/otp/` directory.
 ```bash
 mkdir /opt/botsv1 && cd /opt/
 ```
