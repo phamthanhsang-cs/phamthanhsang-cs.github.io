@@ -190,7 +190,7 @@ In my case, i'll create 2 users: one for BOTSv1 Admin and another is for us - co
 [BOTSv1 Admin gif video]
 _BOTS Admin Setup_
 
-[BOTSv1 Competitor gif video]
+![BOTSv1 Competitor gif video](/assets/images/bots-setup/addcompetitoruser.gif)
 _BOTS Competitor Setup_
 
 Load sample data into Capture the Flag admin.
