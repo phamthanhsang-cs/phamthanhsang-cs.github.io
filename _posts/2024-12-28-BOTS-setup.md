@@ -46,7 +46,7 @@ mkdir /opt/botsv1 && cd /opt/
 
 Download Splunk Enterprise and unzip your download, i choose Splunk version 8.2.9 for my BOTSv1.
 ```bash
-wget -O splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz "https://download.splunk.com/products/tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz -C /opt
+wget -O splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz "https://download.splunk.com/products/tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz -C /opt && tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz 
 ```
 
 Setup Splunk path for easy navigation.
@@ -243,7 +243,7 @@ perl -pi -e 's/<form(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<form version="
 perl -pi -e 's/<dashboard(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<dashboard version="1.1"\1/' /opt/splunk/etc/apps/*/*/data/ui/views/*.xml
 ```
 - Don't have CTF Credentials account to answer question in the CTF app: With this issue, we **must** edit `Edit Team/Users` and `Edit Accepted User License Agreements` like above. 
-- There will be several issues relate to system or network connection when you setting things up, but that's the most interesting part
+- There will be several issues relate to system or network connection that you might encounter when setting things up, but that's the most interesting part because it's improving your research, troubleshooting skills.
 
 ## Final Words
 Setting up BOTS and a self-hosted CTF dashboard might seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also build something that’s completely your own.
