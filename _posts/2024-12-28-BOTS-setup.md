@@ -5,12 +5,11 @@ categories: [Homelab, SIEM]
 tags: [splunk, linux]    
 author: <author_id>   
 description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Splunk
-# toc: false - Table of Contents which is use for display content in right-panel 
 # comments: false 
 image: /assets/images/preview/botssetuppreview.png
 mermaid: true
 ---
-# Introduction
+## Introduction
 I’ve always enjoyed learning about cybersecurity especially on blue side through hands-on challenges, and CTF - Boss of the SOC (BOTS) by Splunk are perfect for that. They give you the chance to experience real-world scenarios in a way that's engaging and practical.
 
 When I decided to set up BOTS and a CTF dashboard for myself, I was surprised at how little information was out there. Most of the guides I found were either focused on pre-hosted setups on online platforms, or only stop at install the Boss of the SOC data set. 
@@ -18,8 +17,9 @@ When I decided to set up BOTS and a CTF dashboard for myself, I was surprised at
 That’s why I decided to write this blog. I wanted to share my experience, step by step, so anyone interested in doing the same thing can have a clear starting point. If you’ve been wanting to self-host BOTS or your own CTF dashboard but didn’t know where to begin, I hope this helps make the process easier and more approachable.
 <br>
 
-# Let's go
-You can run your Splunk on any OS: Windows / Linux / MacOS, i choose Linux for myself.
+## Let’s Dive In!
+
+You can run your Splunk on any OS: Windows, Linux or MacOS. I decided to go with Linux and set it up on a [Proxmox](https://www.proxmox.com/en/) virtual machine. That said, you can host it on whatever platform works best for you, like VMware Workstation, VirtualBox, Hyper-V, or even any Cloud hosting.
 
 ![LinuxBox](/assets/images/bots-setup/neofetch-linuxboxinformation.png){: w="550" h="50" }{: .right }
 
@@ -56,7 +56,7 @@ export SPLUNK_HOME=/opt/splunk
 
 Enable Splunk boot start which is help your Splunk always up even when you reboot your linux box.
 ```bash
-$SPLUNK_HOME/bin/splunk enable boot-start
+$SPLUNK_HOME/bin/splunk enable boot-start 
      ...
      Moving '/opt/splunk/share/splunk/search_mrsparkle/modules.new' to '/opt/splunk/share/splunk/search_mrsparkle/modules'.
      Init script installed at /etc/init.d/splunk.
@@ -187,20 +187,22 @@ Now, let's setup BOTS admin user, you could use Administrator user by default, b
 
 In my case, i'll create 2 users: one for BOTSv1 Admin and another is for us - competitors 
 
-[BOTSv1 Admin gif video]
+![BOTSv1 Admin gif video](/assets/images/bots-setup/addbotsadmin.gif)
 _BOTS Admin Setup_
 
 ![BOTSv1 Competitor gif video](/assets/images/bots-setup/addcompetitoruser.gif)
 _BOTS Competitor Setup_
 
-Load sample data into Capture the Flag admin.
+Load sample data into Capture the Flag admin (Don't forget using `BOTS Admin` user).
 
-[gif video]
+![Load sample data](/assets/images/bots-setup/loadsampledata.gif)
+_Example: load some types of sample data_
 
 Load BOTS questions / answers / hints, you could send email to bots@splunk.com (BOTS Team) to get those contents or contact [me](https://t.me/sangpham0311) for it. 
  - Move to Capture the Flag Admin app --> Edit Questions / Answers / Hints --> Import --> Select `.csv` file
 
-[gif video]
+![Edit Question data](/assets/images/bots-setup/editquestioncsv.gif)
+_Example: Load question .csv to BOTS questions_
 
 After your data import finish, you could attest by navigate to Capture the Flag Admin --> View --> Q&A
 
@@ -232,3 +234,20 @@ _We are 'blue', right?_
 ![TestCorrect](/assets/images/bots-setup/testcorrected.png)
 _Nice!_
 
+## Troubleshoot Common Issues
+- The first issue that we might facing when set things up is `dashboard version is missing` if we plan to use Splunk version 9.x.x.
+  - One of the solutions is add `<form version="1.1">` on dashboard XML file, but it might take forever since BOTS have several dashboards, so this method works if we just want to fix some important dashboards.
+  - The second i found very helpful is using these scripts and then restart Splunk `systemctl restart splunk` or `$SPLUNK_HOME/bin/splunk restart`: 
+```shell
+perl -pi -e 's/<form(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<form version="1.1"\1/' /opt/splunk/etc/apps/*/*/data/ui/views/*.xml
+perl -pi -e 's/<dashboard(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<dashboard version="1.1"\1/' /opt/splunk/etc/apps/*/*/data/ui/views/*.xml
+```
+- Don't have CTF Credentials account to answer question in the CTF app: With this issue, we **must** edit `Edit Team/Users` and `Edit Accepted User License Agreements` like above. 
+- There will be several issues relate to system or network connection when you setting things up, but that's the most interesting part
+
+## Final Words
+Setting up BOTS and a self-hosted CTF dashboard might seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also build something that’s completely your own.
+
+I hope this guide helps you take that first step toward creating your own environment. Whether you're using it for practice, hosting a challenge for others.
+
+If you have any questions or run into issues, feel free to reach out or share your thoughts in the comments. I’d love to hear about your experience and help if I can. Thanks you for reading till the end, and happy learning!
