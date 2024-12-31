@@ -46,7 +46,7 @@ mkdir /opt/botsv1 && cd /opt/
 
 Download Splunk Enterprise and unzip your download, i choose Splunk version 8.2.9 for my BOTSv1.
 ```bash
-wget -O splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz "https://download.splunk.com/products/tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz -C /opt && tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz 
+wget -O splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz "https://download.splunk.com/products/splunk/releases/8.2.9/linux/splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz" && tar xvzf splunk-8.2.9-4a20fb65aa78-Linux-x86_64.tgz -C /opt
 ```
 
 Setup Splunk path for easy navigation.
@@ -248,6 +248,6 @@ perl -pi -e 's/<dashboard(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<dashboard
 ## Final Words
 Setting up BOTS and a self-hosted CTF dashboard might seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also build something that’s completely your own.
 
-I hope this guide helps you take that first step toward creating your own environment. Whether you're using it for practice, hosting a challenge for others.
+I hope this guide helps you take that first step toward creating your own environment. Whether you're using it for practice, hosting a challenge for others, you can use same methology to install your own Boss of the SOC version 2 and 3.
 
 If you have any questions or run into issues, feel free to reach out or share your thoughts in the comments. I’d love to hear about your experience and help if I can. Thanks you for reading till the end, and happy learning!
