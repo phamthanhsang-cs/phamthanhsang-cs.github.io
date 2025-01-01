@@ -1,1 +1,14 @@
 meta: Things I'm interested in my cybersecurity, tech journey.
+layout:
+  post: Post
+  category: Category
+  tag: Tag
+
+# The tabs of sidebar
+tabs:
+  # format: <filename_without_extension>: <value>
+  home: My Blog
+  categories: Categories
+  tags: Tags
+  archives: Timeline
+  about: About Me
