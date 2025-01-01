@@ -250,4 +250,4 @@ Setting up BOTS and a self-hosted CTF dashboard might seem challenging at first,
 
 I hope this guide helps you take that first step toward creating your own environment. Whether you're using it for practice, hosting a challenge for others, you can use same methology to install your own Boss of the SOC version 2 and 3.
 
-If you have any questions or run into issues, feel free to reach out or share your thoughts in the comments. I’d love to hear about your experience and help if I can. Thanks you for reading till the end, and happy learning!
+If you have any questions or run into issues, feel free to reach out or share your thoughts in the comments. I’d love to hear about your experience and help if I can. Thanks for reading till the end, and happy learning!
