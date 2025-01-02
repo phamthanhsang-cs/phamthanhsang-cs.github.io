@@ -99,7 +99,10 @@ Go to browser, enter your Splunk instance IP Address with port 8000 and sign-in 
 ![firstimelogin](/assets/images/bots-setup/firstimelogin.png)
 _First login GUI of Splunk by default_
 
-Go back to your Linux box, download [`botsv1`](https://github.com/splunk/botsv1) dataset. The dataset that i downloaded is full data (around 33 milions events) which is contain both attack data and normal data (noisy) to help us enhanced Splunk search capabilities (Gossip: In my previous company when i was trying to sent the Fortigate Firewall's syslog into SC4S and then forward those logs to Splunk, around 20 days, it has like...50 milions events and cost like 50GB of Storage which is crazy !).
+Go back to your Linux machine, download [`botsv1`](https://github.com/splunk/botsv1) dataset. The version I downloaded contains full data (around 33 million events), including both attack and normal (noisy) data. This dataset will help enhance our Splunk search capabilities. 
+
+*For context, in my previous company, , i tried sending Fortigate Firewall syslogs into SC4S, which then forwarded the logs to Splunk. After about 30 days, we had around 128 million event records, consuming about 33GB of storage. It was crazy!*
+
 ```bash
 cd /opt/botsv1
 wget https://s3.amazonaws.com/botsdataset/botsv1/splunk-pre-indexed/botsv1_data_set.tgz
@@ -246,8 +249,8 @@ perl -pi -e 's/<dashboard(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<dashboard
 - There will be several issues relate to system or network connection that you might encounter when setting things up, but that's the most interesting part because it's improving your research, troubleshooting skills.
 
 ## Final Words
-Setting up BOTS and a self-hosted CTF dashboard might seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also build something that’s completely your own.
+Setting up BOTS and a self-hosted CTF dashboard may seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also create something entirely your own. By applying the same methodology used in Boss of the SOC version 1, you can set up your own versions of Boss of the SOC 2 and 3.
 
-I hope this guide helps you take that first step toward creating your own environment. Whether you're using it for practice, hosting a challenge for others, you can use same methology to install your own Boss of the SOC version 2 and 3.
+I hope this guide helps you take that first step toward creating your own environment, whether you're using it for practice or hosting a challenge for others.
 
-If you have any questions or run into issues, feel free to reach out or share your thoughts in the comments. I’d love to hear about your experience and help if I can. Thanks for reading till the end, and happy learning!
+If you have any questions or run into any issues, feel free to reach out or leave a comment. I’d love to hear about your experience and help if I can. Thanks for reading, and happy Splunking!
