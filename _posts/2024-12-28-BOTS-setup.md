@@ -1,6 +1,6 @@
 ---
 title: Setup your own Boss of the SOC 
-date: 2024-12-25 10:20:00 + 0700
+date: 2024-12-28 10:20:00 + 0700
 categories: [Homelab, SIEM]
 tags: [splunk, linux]    
 author: <author_id>   
@@ -8,6 +8,7 @@ description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Sp
 # comments: false 
 image: /assets/images/preview/botssetuppreview.png
 mermaid: true
+pin: true
 ---
 ## Introduction
 I’ve always enjoyed learning about cybersecurity especially on blue side through hands-on challenges, and CTF - Boss of the SOC (BOTS) by Splunk are perfect for that. They give you the chance to experience real-world scenarios in a way that's engaging and practical.
