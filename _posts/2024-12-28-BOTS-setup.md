@@ -138,7 +138,7 @@ _We are now able to search BOTSv1 Data in Splunk_
 
 But we don't stop here, let's setup our own Boss of the SOC CTF Scoreboard ! 
 
-Firtly, install these Apps / Add-on. 
+Firstly, install these Apps / Add-on. 
 
 | App / Add-on                                | Link                                                                         |
 | ------------------------------------------- | ---------------------------------------------------------------------------- |
@@ -154,7 +154,7 @@ git clone https://github.com/splunk/SA-ctf_scoreboard
 git clone https://github.com/splunk/SA-ctf_scoreboard_admin
 ```
 
-Restart Splunk for prerequisites and the scoring apps recognition
+Restart Splunk for prerequisites and the scoring apps recognition.
 ```bash
 systemctl restart splunk
 ```
@@ -182,7 +182,7 @@ PASS = <your svcaccount password>
 VKEY = random string (10-20 characters)
 ```
 
-Restart your Splunk instance, we are done with terminal and stuffs like that, let's go back to your Splunk Web GUI.
+Restart your Splunk instance, we are so done with this 'black screen' and stuffs like that, let's go back to your Splunk Web GUI.
 
 Now, let's setup BOTS admin user, you could use Administrator user by default, but it need the following roles:
 - admin
@@ -208,15 +208,15 @@ Load BOTS questions / answers / hints, you could send email to bots@splunk.com (
 ![Edit Question data](/assets/images/bots-setup/editquestioncsv.gif)
 _Example: Load question .csv to BOTS questions_
 
-After your data import finish, you could attest by navigate to Capture the Flag Admin --> View --> Q&A
+After your data import finished, you could attest by navigate to Capture the Flag Admin --> View --> Q&A.
 
-Now set the start / end time of the questions by navigate to Capture the Flag Admin --> Edit --> Time Setup and then `Submit Changes` since we are not have any pressure about timely so we could left it whatever we want, i will set 1 year for my BOTSv1. 
+Now set the start / end time of the questions by navigate to Capture the Flag Admin --> Edit --> Time Setup and then `Submit Changes`, since we are not have any pressure about the time so we could left it whatever we want, i will set 1 year for my BOTSv1. 
 
 ![timesetup](/assets/images/bots-setup/timesetup.png)
 
-Next, add your `competitor` user to Team / Users, navigate to Capture the Flag Admin --> Edit --> Edit Team/Users:
+Next, add your `competitors` user to Team / Users, navigate to Capture the Flag Admin --> Edit --> Edit Team/Users:
  - Display Username: Whatever you want, mine is Pham Thanh Sang
- - Team: SOC in my Pocket (Whatever you want too)
+ - Team: SOC in my Pocket (Whatever you want)
  - Username(*): this one is the **most important** one, enter your previous `username` that you just created for BOTS Competitor, `phamthanhsang-cs` for me.
 
 Edit your user agreements accept, Admin --> Edit --> Edit Accepted User License Agreements:
@@ -225,12 +225,12 @@ Edit your user agreements accept, Admin --> Edit --> Edit Accepted User License 
  - EulaName
  - EulaUsername(*): `username` that you just created for BOTS Competitor, mine is `phamthanhsang-cs`
 
-We are so done now, phew ! that was a long run, right ? Let's login Splunk with your `competitor` user, mine is `phamthanhsang-cs` and then go to Capture the Flag app => Questions.
+We are so done now, phew ! That was a long run, right ? Let's login Splunk with your `competitor` user, mine is `phamthanhsang-cs` and then go to Capture the Flag app => Questions.
 
 ![BOTSV1Question](/assets/images/bots-setup/botsv1questions.png)
 _Boss of the SOC version 1 Questions, this is more or less you migh facing in your CTF Challenge_
 
-Let's answer a question to test if we setup our CTF game successfuly. 
+Let's pick a test question to see if we setup our CTF game successfuly. 
 
 ![AnswerTestQuestion](/assets/images/bots-setup/answertestquestion.png)
 _We are 'blue', right?_
@@ -250,8 +250,8 @@ perl -pi -e 's/<dashboard(?=[ >])((?:(?:[^>]| )(?!version="1\.1"))*>)/<dashboard
 - There will be several issues relate to system or network connection that you might encounter when setting things up, but that's the most interesting part because it's improving your research, troubleshooting skills.
 
 ## Final Words
-Setting up BOTS and a self-hosted CTF dashboard may seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and infrastructure, but you also create something entirely your own. By applying the same methodology used in Boss of the SOC version 1, you can set up your own versions of Boss of the SOC 2 and 3.
+Setting up BOTS and a self-host CTF dashboard may seem challenging at first, but the process is incredibly rewarding. Not only do you gain hands-on experience with the tools and the backend of infrastructure, but you also create something entirely your own. By applying the same methodology used in my Boss of the SOC version 1, you can set up your own versions of Boss of the SOC 2 and 3.
 
-I hope this guide helps you take that first step toward creating your own environment, whether you're using it for practice or hosting a challenge for others.
+Well, i hope this guide helps you take that first step toward creating your own CTF environment, whether you're using it for practice or hosting a challenge for others.
 
-If you have any questions or run into any issues, feel free to reach out or leave a comment. I’d love to hear about your experience and help if I can. Thanks for reading, and happy Splunking!
+Lastly, if you have any questions or run into any issues, feel free to reach out or leave a comment down below. I’d love to hear about your experience and help if I can. Thanks for reading, and happy Splunking!!!
