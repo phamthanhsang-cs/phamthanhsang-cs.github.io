@@ -3,16 +3,30 @@
 icon: fas fa-info-circle
 order: 4
 ---
-## Hi, my name is Sang !
+## Hi fam, I'm Sang !
+[![GitHub](https://img.shields.io/badge/github-%23100000.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/phamthanhsang-cs)
+[![Reddit](https://img.shields.io/badge/reddit-%23FF4500.svg?&style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/user/Wooden-Lab6963/)
 
-I'm an IT administrator, Technology and Telecommunication student...and a SOC Analyst wannabe.
+### About Me
 
-Back in February 2024, while working as an IT Helpdesk, I discovered [Wazuh](https://wazuh.com/), an open-source SIEM/XDR platform, and was amazed by its capabilities: file integrity monitoring, VirusTotal integration, automated threat responses, and more. At the time, though, I barely understood what SIEM, XDR, or EDR really meant.
 
-By April, I left my job to explore new opportunities. I dove deep into Tech world, focused around Wazuh which is SIEM - XDR and found a relevant role - SOC Analyst, after job requirements researched, and gave a try the SOC Analyst Level 1 path on TryHackMe. That’s when it all clicked, my IT experience was laying the foundation for my cybersecurity journey. At the same time I discovered Boss of the SOC (version 3) and spent a week recreating it on a self-hosted setup after fixed a bunch of bugs.
+- I am a last year eletronic and telecommunication technology student undergrad at Hanoi Open University.
+- Over a year of experience with IT industry.
 
-Determined to build a future in cybersecurity, I launched my SOC project. But I realized this journey requires time, resources, and patience. To fund my growth, I returned to IT, lucky enough to work as an IT Administrator, and now in 2025, I’m ready to take the next steps: certifications, building my SOC project, and breaking into the cybersecurity field.
+---
 
+### 📌Pinned Repositories
+[![SOCIMP](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=SOC-in-my-Pocket&title_color=ffffff&icon_color=3DEA6F&text_color=3DEA6F&bg_color=091258)](https://github.com/phamthanhsang-cs/SOC-in-my-Pocket)
+[![BOTS](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=Boss-of-the-SOC&title_color=ffffff&icon_color=3DEA6F&text_color=3DEA6F&bg_color=091258)](https://github.com/phamthanhsang-cs/Boss-of-the-SOC)
+
+---
+
+### Connect with me
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/phamthanhsang0311/)
+[![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/sangpham0311)
+[![sang3112002@gmail.com](https://img.shields.io/badge/-sang3112002@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:sang3112002@gmail.com)
+
+-----
 
 
 
