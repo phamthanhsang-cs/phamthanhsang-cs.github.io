@@ -1,8 +1,8 @@
 ---
 title: Setup your own Boss of the SOC 
 date: 2024-12-28 10:20:00 + 0700
-categories: [Homelab, SIEM, SOC, Blue-team]
-tags: [splunk, linux, ctf]    
+categories: [siem, soc, ctf-challenge, homelab]
+tags: [linux, splunk]    
 author: <author_id>   
 description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Splunk
 # comments: false 
@@ -254,4 +254,4 @@ Setting up BOTS and a self-host CTF dashboard may seem challenging at first, but
 
 Well, i hope this guide helps you take that first step toward creating your own CTF environment, whether you're using it for practice or hosting a challenge for others.
 
-Lastly, if you have any questions or run into any issues, feel free to reach out or leave a comment down below. I’d love to hear about your experience and help if I can. Thanks for reading, and happy Splunking!!!
+Lastly, if you have any questions or run into any technical issues, feel free to reach out or leave a comment down below. I’d love to hear about your experience and help if I can. Thanks for reading, and happy Splunking!!!
