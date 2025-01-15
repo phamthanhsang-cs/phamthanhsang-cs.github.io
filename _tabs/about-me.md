@@ -8,6 +8,10 @@ order: 4
 [![Reddit](https://img.shields.io/badge/reddit-%23FF4500.svg?&style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/user/Wooden-Lab6963/)
 
 ### About Me
+- Electronics and Telecommunications student with a passion for technology and cybersecurity.
+- Technical and IT Administrator, managing networking and storage systems for an educational company.
+- Responsible for ensuring reliability, security, and performance of IT infrastructure on both Headquarter and Branch.
+- Aspiring SOC Analyst, focusing on threat detection, incident response, and security operations.
 
 ---
 
