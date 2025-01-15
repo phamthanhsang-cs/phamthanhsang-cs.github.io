@@ -1,8 +1,8 @@
 ---
 title: Setup your own Boss of the SOC 
 date: 2024-12-28 10:20:00 + 0700
-categories: [Homelab, SIEM]
-tags: [splunk, linux]    
+categories: [Homelab, SIEM, SOC, Blue-team]
+tags: [splunk, linux, ctf]    
 author: <author_id>   
 description: Spin up your own blue-team CTF Challenge with Boss of the SOC by Splunk
 # comments: false 

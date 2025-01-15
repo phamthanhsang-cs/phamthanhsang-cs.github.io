@@ -9,15 +9,11 @@ order: 4
 
 ### About Me
 
-
-- I am a last year eletronic and telecommunication technology student undergrad at Hanoi Open University.
-- Over a year of experience with IT industry.
-
 ---
 
 ### 📌Pinned Repositories
-[![SOCIMP](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=SOC-in-my-Pocket&title_color=ffffff&icon_color=3DEA6F&text_color=3DEA6F&bg_color=091258)](https://github.com/phamthanhsang-cs/SOC-in-my-Pocket)
-[![BOTS](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=Boss-of-the-SOC&title_color=ffffff&icon_color=3DEA6F&text_color=3DEA6F&bg_color=091258)](https://github.com/phamthanhsang-cs/Boss-of-the-SOC)
+[![SOCIMP](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=SOC-in-my-Pocket&title_color=ffffff&icon_color=ffffff&text_color=ffffff&bg_color=002894)](https://github.com/phamthanhsang-cs/SOC-in-my-Pocket)
+[![BOTS](https://github-readme-stats.vercel.app/api/pin/?username=phamthanhsang-cs&repo=Boss-of-the-SOC&title_color=ffffff&icon_color=ffffff&text_color=ffffff&bg_color=002894)](https://github.com/phamthanhsang-cs/Boss-of-the-SOC)
 
 ---
 
