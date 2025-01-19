@@ -11,7 +11,7 @@ order: 4
 - Electronics and Telecommunications student with a passion for technology and cybersecurity.
 - Technical and IT Administrator, managing networking and storage systems for an educational company.
 - Responsible for ensuring reliability, security, and performance of IT infrastructure on both Headquarter and Branch.
-- Aspiring SOC Analyst, focusing on threat detection, incident response, and security operations.
+- Looking for SOC Analyst position, focusing on monitoring, threat detection, incident response, and security operations.
 
 ---
 
