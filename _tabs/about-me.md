@@ -3,7 +3,7 @@
 icon: fas fa-info-circle
 order: 4
 ---
-## Hi fam, I'm Sang !
+## Hi fam, a warm welcome to y'all, I'm Sang !
 [![GitHub](https://img.shields.io/badge/github-%23100000.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/phamthanhsang-cs)
 [![Reddit](https://img.shields.io/badge/reddit-%23FF4500.svg?&style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/user/Wooden-Lab6963/)
 
@@ -12,6 +12,8 @@ order: 4
 - Technical and IT Administrator, managing networking and storage systems for an educational company.
 - Responsible for ensuring reliability, security, and performance of IT infrastructure on both Headquarter and Branch.
 - Looking for SOC Analyst position, focusing on monitoring, threat detection, incident response, and security operations.
+
+"We may not design the F1 car or take the wheel, but we’re the pit crew - fixing what’s broken, keeping you on track, and ensuring the race is never lost."
 
 ---
 
