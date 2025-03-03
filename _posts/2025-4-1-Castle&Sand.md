@@ -1,6 +1,6 @@
 ---
 title: KC7 Cyber Castle & Sand Write-ups
-date: 2025-2-28 16:00:00 + 0700
+date: 2025-4-1 16:00:00 + 0700
 categories: [blue-teaming, soc, ctf-challenge]
 tags: [azure, threat-hunting, log-analysis, write-ups]  
 author: <author_id>   
