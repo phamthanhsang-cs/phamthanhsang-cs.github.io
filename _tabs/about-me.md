@@ -8,10 +8,10 @@ order: 4
 [![Reddit](https://img.shields.io/badge/reddit-%23FF4500.svg?&style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/user/Wooden-Lab6963/)
 
 ### About Me
-- Electronics and Telecommunications student with a passion for technology and cybersecurity.
-- Technical and IT Administrator, managing networking and storage systems for an educational company.
+- Electronics and Telecommunications student with a thumbs-up for technology and cybersecurity.
+- Over a year as Technical and IT Administrator, managing networking and storage systems entirely for an educational company.
 - Responsible for ensuring reliability, security, and performance of IT infrastructure on both Headquarter and Branch.
-- Looking for SOC Analyst position, focusing on monitoring, threat detection, incident response, and security operations.
+- Help organizations on security monitoring, threat detection, incident response, and security operations.
 
 "We may not design the F1 car or take the wheel, but we’re the pit crew - fixing what’s broken, keeping you on track, and ensuring the race is never lost."
 
