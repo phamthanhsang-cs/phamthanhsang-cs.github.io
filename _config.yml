@@ -16,7 +16,7 @@ timezone: Asia/Ho_Chi_Minh
 
 title: Thành Sang # the main title
 
-tagline: CompTIA Security+ certified # it will display as the subtitle
+tagline: I write about CTF / Tech / Cyber stub # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   My blogs about Cybersecurity, Tech journey, and other things I'm interested in.
