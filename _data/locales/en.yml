@@ -8,7 +8,7 @@ layout:
 tabs:
   # format: <filename_without_extension>: <value>
   home: My Blog
-  categories: Categories
-  tags: Tags
+  categories: Category
+  tags: Tag
   archives: Timeline
   about: About Me
