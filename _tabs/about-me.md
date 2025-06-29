@@ -11,7 +11,7 @@ order: 4
 
 ---
 
-### Who am i
+### Who Am I 
 - Electronics and Telecommunications student with a big thumbs up in technology and cybersecurity.
 - Over a year as Technical & IT Administrator, managing IT infrastructure for organizations.
 - Responsible for secure and high-performing IT systems at both Headquarters and Branch.
