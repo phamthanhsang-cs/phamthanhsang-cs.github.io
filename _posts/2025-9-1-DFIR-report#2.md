@@ -1,5 +1,5 @@
 ---
-title: Operation NightWing: The Trade at Hollow Pine - Digital Forensics Challenge @EchothisLabs  
+title: Operation NightWing-The Trade at Hollow Pine - Digital Forensics Challenge @EchothisLabs  
 date: 2025-09-15 00:00:00 +0700  
 categories: [dfir, blue-teaming]  
 tags: [threat-hunting, log-analysis, digital-forensics]  
