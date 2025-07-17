@@ -4,7 +4,7 @@ date: 2025-07-15 00:00:00 +0700
 categories: [siem, blue-teaming, soc]
 tags: [splunk, threat-hunting, log-analysis]    
 author: <author_id>   
-description: A real-world story of threat hunting from a mystery dataset provided in a SOC analyst interview process.
+description: READ THE OTHER ONES ! IM STILL FINISHING THIS BLOG !!!! THANKS
 image: /assets/images/preview/interview-preview.png
 # toc: false # Uncomment to disable the Table of Contents in the right panel
 # comments: false # Uncomment to disable comments
