@@ -5,9 +5,9 @@ categories: [siem, blue-teaming, soc]
 tags: [splunk, threat-hunting, log-analysis]    
 author: <author_id>   
 description: A real-world story of threat hunting from a mystery dataset provided in a SOC analyst interview process.
+image: /assets/images/preview/interview-preview.png
 # toc: false # Uncomment to disable the Table of Contents in the right panel
 # comments: false # Uncomment to disable comments
-# image: /assets/images/preview/
 ---
 
 ### A Story Behind
@@ -99,7 +99,7 @@ Use whatever tools you're most comfortable with—there’s no single "correct" 
 
 In my case, I already had a Splunk on-premise instance set up for log management, so I decided to use it. Additionally, I needed to extract meaningful patterns from the dataset, rely heavily on visualizations, and perform correlation across multiple logs. Splunk is a powerful tool that excels in these areas and fits the purpose well.
 
-#### Ingesting & Parsing 
+#### Ingesting
 
 Following the steps outlined in the [**Pre-analysis**](https://phamthanhsang-cs.site/posts/INTERVIEW-DATA/#pre-analysis) section, let’s walk through the process step by step, starting from ingesting the logs to parsing the data, and enriching it to add more context. 
 
@@ -111,4 +111,10 @@ First is ingesting the logs into Splunk, for maintainence, handling data purpose
 
 ![pic6](assets/images/interview-data/pic6.png)
 
-2. 
+2. Add dataset into Splunk with associated App and Index
+  - Add data -> Upload
+
+
+#### Parsing
+
+### Analysis

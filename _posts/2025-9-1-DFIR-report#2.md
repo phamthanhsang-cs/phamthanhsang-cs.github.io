@@ -7,5 +7,5 @@ author: <author_id>
 description: A deep-dive Windows and Android forensic investigation to uncover the Owl Trafficking Syndicate (OTS) - an Internal criminal organization.
 # toc: false # Uncomment to disable the Table of Contents in the right panel
 # comments: false # Uncomment to disable comments
-# image: /assets/images/preview/
+image: /assets/images/preview/dfir-report2-preview.png
 ---

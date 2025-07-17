@@ -1,5 +1,5 @@
 ---
-title: Setup your own Boss of the SOC 
+title: Setup Your Own Boss Of The SOC 
 date: 2024-12-28 10:20:00 + 0700
 categories: [siem, soc, ctf-challenge, homelab]
 tags: [linux, bots, splunk]    
