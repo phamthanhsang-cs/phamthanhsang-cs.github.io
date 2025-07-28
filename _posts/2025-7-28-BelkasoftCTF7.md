@@ -163,20 +163,58 @@ Search the user name on Telegram, i found the flag which is +995568988280
 >ANSWER: `+995568988280`
 {: .prompt-info }
 
-> From next question, we got another piece of evidence which extracted data from suspected phone 
+> From next question, we got another piece of evidence which extracted data from suspected Android phone. 
 {: .prompt-tip }
 
+Now feed Belkasoft X with new data source we just collected from the challenge. 
 
+Below is our new artifacts, collected from suspected mobile device.
+
+![pic11](assets/images/belka/belka7/pic11.png)
+_More evidences, more fun, right?_
+
+*Beside Belkasoft X, there's a extremly strong Android forensic tool - ALEAPP, in case you wanna use opensource tools to solve the challenge*
 
 #### Question No.8: What is the Google account this phone is set up with? Format: username@gmail.com
 
+From Artifacts -> Overview, go to System files -> Android accounts, we could found the gmail account relate to this phone.
 
+![pic12](assets/images/belka/belka7/pic12.png)
+
+>ANSWER: `goggleslover93@gmail.com`
+{: .prompt-info }
 
 #### Question No.9: Where does the phone owner work and what’s his position? For example, Senior grill operator at Wendy’s
 
+This flag was inside the mailbox, one of the conversations, related to his next upcoming article. From Artifact -> Structure, go to Mails -> EML
+
+![pic13](assets/images/belka/belka7/pic13.png)
+
+>ANSWER: `Investigative Journalist at Peach State Ledger`
+{: .prompt-info }
+
 #### Question No.10: What are the last 4 digits of the suspect’s bank card, and the contact phone number of his bank? For example: *1337, +1234567890123
 
+This is the tricky one i'd encountered, first is to detect suspect's bank card, i found it in several emails, especially relate to some services require payment (Spotify, Bolt, McDonald, etc)
+
+Go to Artifact -> Overview -> Email 
+
+![pic14](assets/images/belka/belka7/pic14.png)
+
+The bank name, i found it by surfing phone's browser history and saw severals result relate to Liberty Bank (Artifacts -> Structure -> Browsers -> Google -> URLs). 
+
+![pic15](assets/images/belka/belka7/pic15.png)
+
+Go to the bank website, i found the contact number which is `+995 32 2 55 55 00`
+
+![pic16](assets/images/belka/belka7/pic16.png)
+
+>ANSWER: `*7076, +995322555500`
+{: .prompt-info }
+
 #### Question No.11: Which dependency-causing substance is mentioned in the chat logs on the phone? Format: common name, e.g. ketamine
+
+
 
 #### Question No.12: Where the two missing people—an activist and a teenager—can be retrieved? Format: lat,lon lat,lon — or just click the map
 
