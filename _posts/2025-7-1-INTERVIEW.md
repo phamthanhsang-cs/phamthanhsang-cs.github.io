@@ -1,6 +1,6 @@
 ---
 title: Can You Hunt Something From Nothing?
-date: 2025-07-30 00:00:00 +0700
+date: 2025-08-30 00:00:00 +0700
 categories: [siem, blue-teaming, soc]
 tags: [splunk, threat-hunting, log-analysis]    
 author: <author_id>   

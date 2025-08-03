@@ -163,6 +163,8 @@ Search the user name on Telegram, i found the flag which is +995568988280
 >ANSWER: `+995568988280`
 {: .prompt-info }
 
+---
+
 > From next question, we got another piece of evidence which extracted data from suspected Android phone. 
 {: .prompt-tip }
 
@@ -214,30 +216,198 @@ Go to the bank website, i found the contact number which is `+995 32 2 55 55 00`
 
 #### Question No.11: Which dependency-causing substance is mentioned in the chat logs on the phone? Format: common name, e.g. ketamine
 
+This question is tough, also, time comsuming, but i managed to found the flags, BY TRANSLATED EVERY JUNKY CHAT IN THIS PHONE.
 
+Actually, i got the idea from the vendor, behind these questions, since they just released new AI-feature on their product called BelkaGPT.
+
+The evidence i found was in message chat, after our victim got abducted by aliens. 
+
+![pic17](assets/images/belka/belka7/pic17.png)
+
+**C8H10N4O2** is **Caffeine**, actually i failed some questions due to did not translate conversation entirely.
+
+> ANSWER: `Caffeine`
+{: .prompt-info }
 
 #### Question No.12: Where the two missing people—an activist and a teenager—can be retrieved? Format: lat,lon lat,lon — or just click the map
 
 **I DIDN'T SOLVE THIS QUESTION**
 
+Turns out, it was pretty...tricky to find the answer. In those chat logs, were 2 chat messages contain geolocation without any context. 
+
+![pic20](assets/images/belka/belka7/pic20.png)
+_The first one_
+
+
+![pic21](assets/images/belka/belka7/pic21.png)
+_The second one_
+
+And those two coordinates was the answer for this question.
+
+> ANSWER: 41.6990, 44.7572 41.7694, 44.8639 
+{: .prompt-info }
+
+---
+
 > From this question, we got another piece of evidence which the traffic captured by tech squad at suspected home.
-{: .prompt-info}
+{: .prompt-tip}
 
 #### Question No.13: What is the password of the suspect’s home Wi-Fi network?
 
+While inspecting sniffed traffic, we definitely see the SSID="PINEAPPLENET" stood out frequently.
+
+![pic22](assets/images/belka/belka7/pic22.png)
+
+Back to Belkasoft X, i was able to figure out the suspect's home Wi-Fi network on Artifacts -> Overview -> Wireless configurations.
+
+![pic23](assets/images/belka/belka7/pic23.png)
+
+> ANSWER: `G0P1n3APL!`
+{: .prompt-info }
+
 #### Question No.14: What does the suspect call himself since recently? Format: new nickname, e.g. X Æ A-12
 
+This question were pretty easy, if you have some knowledge relate to packet analysis, and also, the tool Wireshark itself. 
+
+Our very first task is decrypt the sniffed traffics, first go to Wireshark -> Edit -> Preferences.
+
+From Preferences Tab, go to Protocol and find IEEE 802.11 since it's Wireless LAN standard, you will able to decrypt entire traffic by config decryption key that we just found out from previous question.
+
+![pic24](assets/images/belka/belka7/pic24.png)
+
+
+And by inspecting sniffed traffic, i found a lot of images via SMB traffics
+
+![pic25](assets/images/belka/belka7/pic25.png)
+
+Export those images, i was able to find the answer
+
+![pic26](assets/images/belka/belka7/pic26.png)
+
+![pic27](assets/images/belka/belka7/pic27.png)
+
+> ANSWER: `Y Æ B-12`
+{: .prompt-info }
+
 #### Question No.15: Figure out the moment when the suspect’s body started acting weird as precisely as you can. Provide timestamp with seconds in a common format, e.g. 2025-05-15 15:05:05 UTC
+
+From Belkasoft Artifact, to to Overview -> Heart rate, this information come from `com.xiaomi.hm.health\databases` which is contains information about user health information.
+
+![pic28](assets/images/belka/belka7/pic28.png)
+
+You will see exact timestamp, when user heart pulse went abnormal.
+
+> ANSWER: 2025-07-17 12:53:37 UTC
+{: .prompt-info}
 
 #### Question No.16: At which event the journalist became puppeteered by aliens? Format: full name of the event, e.g. 2nd Symposium on Creative Writing
 
 **I DIDN'T SOLVE THIS QUESTION**
 
+Turns out, user was use Speedtest, at event where aliens abducted him.
+
+![pic29](assets/images/belka/belka7/pic29.png)
+
+Examined it's database, it was **TruthTack News Summit 2025**
+
+![pic30](assets/images/belka/belka7/pic30.png)
+_Pretty tricky, huh?_
+
+>ANSWER: `TruthTack News Summit 2025`
+{: .prompt-info}
+
 #### Question No.17: What is the car the jour… alien drives? Format: make, model, year, e.g. Dodge Caliber (2008)
+
+**I DIDN'T SOLVE THIS QUESTION**
+
+I was pretty upset since i wasnt able to find the answer, turns out, it was easier than i thought.
+
+Since i have a tool call Everything to find any find with "keyword", the answer was in "carservice", came from **com.google.android.projection.gearhead**
+
+![pic31](assets/images/belka/belka7/pic31.png)
+
+```xml
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="frx_activation_logged" value="true" />
+    <string name="car_saved_setting_night_mode">2</string>
+    <int name="projected_presentation_config_max_checks" value="10" />
+    <boolean name="toll_card_sensor_enabled" value="true" />
+    <int name="touchpad_focus_navigation_history_max_age_ms" value="4000" />
+    <boolean name="Mazda_CX-60_2020_car_ev_settings_enabled" value="true" />
+    <int name="car_connection_count" value="0" />
+    <string name="car_tos_data">2</string>
+    <long name="disconnect_time" value="1752309649149" />
+    <boolean name="car_backup_valid" value="false" />
+    <string name="car_tos_main">1</string>
+    <int name="touchpad_focus_navigation_history_max_size" value="30" />
+    <long name="last_focus_change_time" value="1752308738230" />
+    <string name="car_tos_safety">1</string>
+    <int name="projected_presentation_config_check_delay" value="20" />
+    <boolean name="has_video_focus" value="true" />
+</map>
+
+```
+
+>ANSWER: `Mazda CX-60 2020`
+{: .prompt-info }
 
 #### Question No.18: Mine the ATC software logs for serial numbers of the radars that spotted a UFO flying by. For example: L123456, M34567890, K234567
 
+I was able to found the answer for this question, by extracted ATC process and inspect it .db file.
+
+But the interesting is, when i used MemProcFS, there was no information relate to the Radar that detected the UFO, but Vol3 was helped me to do that.
+
+![pic32](assets/images/belka/belka7/pic32.png)
+
+From TABLE object, we found there was a call sign UFO with air_craft id of 36.
+
+![pic33](assets/images/belka/belka7/pic33.png)
+
+Filter TABLE detect by air_craft id of 36, i found several detections come from radar_id 1, 2, 3 and 4.
+
+![pic34](assets/images/belka/belka7/pic34.png)
+
+And the final answer was in radar_serials.
+
+> ANSWER: `RDAD425319469B, RDA665200514A, RNN770196044B, RDA714203872B`
+{ : .prompt-info}  
+
 #### Question No.19: Pull the full UFO label reported by the radars, as it was shown on the ATC software display Format: UFO137-XXXX-XXXX-X
+
+This question is pretty interesting, since they gave us a little hint:
+
+```text
+I dialed the ATC tower, feeling a little ridiculous even before the dispatcher picked up.
+
+—Air Traffic Control, this better be important.
+
+—Hey, it’s the forensics guy again. Did anything... weird happen last night on your terminal? Something off?
+
+Silence on the other end.
+—You know what... funny you should ask. The radar software went all glitchy, picking up some...
+unidentified something. Thought it was acting up again.
+
+—Did you log it?
+
+—Nah. Just took a quick screenshot and left it hanging unsaved in Paint or whatever.
+
+—Seriously? You left crucial radar evidence in Paint?
+
+He scoffed.
+—Don’t lecture me, genius. Just do your magic voodoo thing and pull it.
+```
+
+I was able to solve this question, first by extract memdump from mspaint.exe, and then carve all data (relate to images) by `foremost`
+
+```shell
+foremost -t jpeg,png,jpg -i pid.8508.dmp -o /image
+```
+
+![pic35](assets/images/belka/belka7/pic35.png)
+
+> ANSWER: `UFO137-1299-N21C-2`
+{ : .prompt-info} 
 
 #### Question No.20: What identification number is painted on board of the aliens’ spacecraft? Please help yourself to the NSA spy satellite imagery archive: spysatarchive.nsa.fyi/
 
