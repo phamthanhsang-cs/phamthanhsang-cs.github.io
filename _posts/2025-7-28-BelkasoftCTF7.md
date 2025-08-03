@@ -413,11 +413,45 @@ foremost -t jpeg,png,jpg -i pid.8508.dmp -o /image
 
 **I DIDN'T SOLVE THIS QUESTION**
 
+This question might be the hardest one i've encountered in this challenge, not because it was hard by itself, also, you MUST solve this challenge to "unlock" the other two.
+
+When see people in CTF room discuss about this one, my mind was blow, the information, their creatity humbled me.
+
+There were 2 different ways to approach this question, one from official and one from a CTF player, i'll drop those links below:
+
+- [https://belkasoft.com/belkactf7-writeup](https://belkasoft.com/belkactf7-writeup)
+- [https://medium.com/@sshekhar01/belkactf-7-stranger-dfings-writeup-e9f29561926c](https://medium.com/@sshekhar01/belkactf-7-stranger-dfings-writeup-e9f29561926c)
+
+The approached way from that CTF Player was really creative in my oppnion.
+
+He first found a process call ScreenClipping at 07-17-2025 19:14:14 - Indicated user was captured the UFO on his screen.
+
+And then he inspect chat logs all pulled out the coordinates which was "41.7066, 44.7972" and found the Identification number
+
+![pic36](assets/images/belka/belka7/pic36.jpeg)
+
+> ANSWER: `B1137N`
+{ : .prompt-info} 
+
+
 #### Question No.21: Connect to the aliens’ mothership VPN and start exploring. Where is the aliens’ craft parked right now? Format: lat,lon — or just click the map
 
 **I DIDN'T SOLVE THIS QUESTION**
+
+I recommend read those two write-up from above, since Belkasoft was turn off the VPN Server, so i could not go further, sadly.
+
 
 #### Question No.22: To save the Earth we need to instead point the beam at something useless... How about Pluto? Tell mothership to shoot Pluto to win the CTF.
 
 **I DIDN'T SOLVE THIS QUESTION**
 
+I recommend read those two write-up from above, since Belkasoft was turn off the VPN Server, so i could not go further, sadly.
+
+
+### My Thought
+
+Since you already knew from above, i've solved 16/22 flags, feel a bit defeated but also i learnt alot from this challenge, mostly on Memory Analysis and Android Forensic.
+
+Also, i feel like this year, some one who was able to use BelkaGPT will get a slightly advantage, especially from chat logs one.
+
+Thank y'all for get along with me till this line, i'll catch you - BelkaCTF in next year and come back stronger. 
