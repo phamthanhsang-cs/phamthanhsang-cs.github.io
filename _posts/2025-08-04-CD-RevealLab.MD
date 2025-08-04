@@ -26,7 +26,7 @@ You are a forensic investigator at a financial institution, and your SIEM flagge
 
 #### Q1: Identifying the name of the malicious process helps in understanding the nature of the attack. What is the name of the malicious process?
 
-Before answer these questions, let's use MemProcFS with Forensic Mode 1, to mounted memory dump file.
+Before answer these questions, let's use MemProcFS with Forensic Mode 1, to mount memory dump file.
 
 ```shell
 /path/to/MemProcFS MemProcFS.exe -f /path/to/memorydump 192-Reveal.dmp -forensic 1
