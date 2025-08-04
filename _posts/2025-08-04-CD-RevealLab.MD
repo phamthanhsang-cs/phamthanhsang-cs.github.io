@@ -34,7 +34,7 @@ Before answer these questions, let's use MemProcFS with Forensic Mode 1, to moun
 
 ![pic1](assets/images/cyberdefender/reveallab/pic1.png)
 
-Everyone has their bias analysis style, for me in incident case where do not know where to look at first, i alway start at **Network Activity**, for Volatility3 you can use `windows.netstat`, since i could get that information from MemProcFS at `M:\sys\net\netstat.txt`, i'll utilize it.
+Everyone has their bias analysis style, for me, in an incident case where i don't know where to look into first, i alway start at **Network Activity**, for Volatility3 you can use `windows.netstat`, since i could get that information from MemProcFS at `M:\sys\net\netstat.txt`, i'll utilize it.
 
 ```shell
    #    PID Proto  State        Src                           Dst                          Process
