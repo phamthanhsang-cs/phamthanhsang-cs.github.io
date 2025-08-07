@@ -1,5 +1,5 @@
 ---
-title: Endpoint Forensics - Reveal Lab @CyberDefender
+title: Endpoint Forensics - Reveal @CyberDefender
 date: 2025-08-4 00:00:00 +0700
 categories: [dfir, blue-teaming, cyber-defender]
 tags: [digital-forensics, endpoint-forensics, memory-analysis]
@@ -19,8 +19,8 @@ You are a forensic investigator at a financial institution, and your SIEM flagge
 - 192-Reveal.dmp ~ 2GB in size
 
 ### Tools
-- Volatility3
-- MemProcFS
+- [Volatility3](https://github.com/volatilityfoundation/volatility3)
+- [MemProcFS](https://github.com/ufrisk/MemProcFS)
 
 ### Questions
 
