@@ -12,10 +12,9 @@ order: 4
 ---
 
 ### Who Am I 
-- Electronics and Telecommunications student with a big thumbs up in cybersecurity (SOC Domain).
-- Over a year as a Technical & IT Administrator, managing IT infrastructure for organizations.
-- Responsible for secure and high-performing IT systems at both Headquarters and Branch.
-- Focused on network & endpoint forensics, incident response, and SOC operations.
+- Electronics and Telecommunications student with a big thumbs up for digital forensics and incident response.
+- Network Security Engineer experienced in implementing and securing Firewall, SIEM / SOAR infrastructures.
+- Specialized in network & endpoint forensics, incident response, and SOC operations, with a focus on investigating threats, analyzing evidence, and develop response runbooks / playbooks or whatever "book" you give it a name.
 
 > “We may not design the F1 car or take the wheel, but we’re the pit crew, fixing what’s broken, keeping things on track, and making sure the race is never lost.”
 

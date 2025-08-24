@@ -1,6 +1,6 @@
 ---
 title: Ransomware Intrusion Investigation - Public Dataset From @DFIR-Report To Hire Analysts. 
-date: 2025-08-11 00:00:00 +0700  
+date: 2025-09-11 00:00:00 +0700  
 categories: [dfir, blue-teaming]  
 tags: [threat-hunting, log-analysis, digital-forensics]  
 author: <author_id>  

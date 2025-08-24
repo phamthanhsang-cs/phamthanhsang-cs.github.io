@@ -1,6 +1,6 @@
 ---
 title: BelkaCTF No.1- BelkaDay Walkthrough 
-date: 2025-08-10 00:00:00 +0700 
+date: 2025-09-10 00:00:00 +0700 
 categories: [dfir, blue-teaming]  
 tags: [digital-forensics, belkactf]  
 author: <author_id>  
