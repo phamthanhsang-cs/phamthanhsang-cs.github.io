@@ -571,3 +571,4 @@ One of those files - `IMF-Mission.pdf` contains flag that we need to retrieve.
 ![pic8](assets/images/cyberdefender/silentbreach/pic8.png)
 
 >ANSWER: `CyberDefenders{N3v3r_eX3cuTe_F!l3$_dOwnL0ded_fr0m_M@lic10u5_$erV3r}`
+{: .prompt-info }
