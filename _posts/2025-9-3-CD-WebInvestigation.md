@@ -104,15 +104,25 @@ Worth notice in above picture is, there's no report to this IP Address so far, i
 #### Q5: Can you provide the complete request URI that was used to read the web server's available databases?
 
 
+> ANSWER: `/search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,schema_name)),0x7176706a71) FROM INFORMATION_SCHEMA.SCHEMATA-- -`
+{: .prompt-info }
 #### Q6: Assessing the impact of the breach and data access is crucial, including the potential harm to the organization's reputation. What's the table name containing the website users data?
 
+> ANSWER: `customers`
+{: .prompt-info }
 
 #### Q7: The website directories hidden from the public could serve as an unauthorized access point or contain sensitive functionalities not intended for public access. Can you provide the name of the directory discovered by the attacker?
 
+> ANSWER: `/admin/`
+{: .prompt-info } 
 
 #### Q8: Knowing which credentials were used allows us to determine the extent of account compromise. What are the credentials used by the attacker for logging in?
 
+> ANSWER: `admin:admin123!`
+{: .prompt-info }
 
 #### Q9: We need to determine if the attacker gained further access or control of our web server. What's the name of the malicious script uploaded by the attacker?
 
+> ANSWER: `NVri2vhp.php`
+{: .prompt-info }
 
