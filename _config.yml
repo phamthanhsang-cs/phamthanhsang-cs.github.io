@@ -16,10 +16,10 @@ timezone: Asia/Ho_Chi_Minh
 
 title: Thành Sang # the main title
 
-tagline: I write about CTF / Tech / Cyber stub # it will display as the subtitle
+tagline: I write about CTF / Tech / Cybersecurity stub # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  My blogs about Cybersecurity, Tech journey, and other things I'm interested in.
+  My blogs about Cybersecurity, Tech journey, and other things i'm interested in.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
